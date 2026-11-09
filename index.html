@@ -1,1 +1,594 @@
 <!DOCTYPE html>
+<!DOCTYPE html> 
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#091e36">
+<title>CruiseConnect</title>
+
+<style>
+:root{
+ --navy:#091e36;
+ --blue:#176b9b;
+ --sky:#dff2fc;
+ --gold:#e9bd68;
+ --white:#fff;
+ --text:#25384b;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f3f7fa;
+ color:var(--text);
+}
+header{
+ background:var(--navy);
+ color:white;
+ padding:18px 5%;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+ flex-wrap:wrap;
+}
+.logo{font-size:25px;font-weight:bold}
+.logo span{color:#72c8f0}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+nav button{
+ background:transparent;
+ color:white;
+ border:0;
+ padding:11px 13px;
+ border-radius:22px;
+ cursor:pointer;
+}
+nav button.active,nav button:hover{background:#245b80}
+.page{
+ display:none;
+ max-width:1200px;
+ margin:auto;
+ padding:28px 5%;
+}
+.page.active{display:block}
+.hero{
+ min-height:390px;
+ border-radius:22px;
+ padding:40px;
+ display:flex;
+ align-items:center;
+ color:white;
+ background:
+ linear-gradient(90deg,rgba(5,22,42,.92),rgba(5,22,42,.2)),
+ url("https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1500") center/cover;
+}
+.hero-content{max-width:570px}
+.hero h1{font-size:clamp(36px,6vw,60px);margin:0 0 15px}
+.hero p{font-size:18px;line-height:1.6}
+.btn{
+ border:0;
+ border-radius:25px;
+ padding:12px 21px;
+ background:var(--gold);
+ color:var(--navy);
+ font-weight:bold;
+ cursor:pointer;
+}
+.btn.blue{background:var(--blue);color:white}
+.btn.light{background:var(--sky);color:var(--navy)}
+h2{color:var(--navy);font-size:28px}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+ gap:20px;
+}
+.card,.panel{
+ background:white;
+ border-radius:18px;
+ overflow:hidden;
+ box-shadow:0 5px 20px #102c4610;
+}
+.card img{width:100%;height:190px;object-fit:cover}
+.card-content{padding:20px}
+.card h3{color:var(--navy)}
+.card p{line-height:1.5}
+.panel{padding:24px;margin:20px 0}
+.tag{
+ display:inline-block;
+ background:var(--sky);
+ color:var(--blue);
+ padding:7px 12px;
+ border-radius:20px;
+ font-size:12px;
+ font-weight:bold;
+}
+select,input{
+ padding:12px;
+ border:1px solid #cbd8e2;
+ border-radius:10px;
+ font-size:15px;
+ max-width:100%;
+}
+.ship-detail{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:25px;
+ align-items:center;
+}
+.ship-detail img{
+ width:100%;
+ height:290px;
+ object-fit:cover;
+ border-radius:15px;
+}
+.people{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+ gap:18px;
+}
+.person{
+ background:white;
+ border-radius:18px;
+ padding:20px 12px;
+ text-align:center;
+ box-shadow:0 5px 18px #102c4610;
+}
+.person img{
+ width:100px;
+ height:100px;
+ object-fit:cover;
+ border-radius:50%;
+ border:4px solid var(--sky);
+}
+.person h3{color:var(--navy);margin-bottom:5px}
+.person p{font-size:13px;color:#65778a}
+.points{font-size:45px;color:var(--blue);font-weight:bold}
+.progress{
+ background:#e2eaf0;
+ height:14px;
+ border-radius:20px;
+ overflow:hidden;
+}
+.progress div{
+ height:100%;
+ width:0;
+ background:#2c9ac8;
+ transition:.3s;
+}
+.stamps{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+ gap:12px;
+}
+.stamp{
+ text-align:center;
+ padding:18px 10px;
+ border:2px dashed #9bb7ca;
+ border-radius:15px;
+ background:#f8fbfd;
+}
+.stamp.done{border:2px solid #2c9ac8;background:#e7f6fc}
+.photo-preview{
+ display:block;
+ max-width:100%;
+ max-height:300px;
+ border-radius:15px;
+ margin-top:15px;
+}
+.hidden{display:none}
+footer{
+ background:var(--navy);
+ color:white;
+ text-align:center;
+ padding:25px;
+ margin-top:35px;
+}
+@media(max-width:650px){
+ header{justify-content:center}
+ nav{justify-content:center}
+ nav button{font-size:12px;padding:9px}
+ .hero{padding:25px;min-height:340px}
+ .ship-detail{grid-template-columns:1fr}
+ .page{padding:22px 4%}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">Cruise<span>Connect</span></div>
+ <nav>
+  <button class="active" onclick="showPage('inicio',this)">Inicio</button>
+  <button onclick="showPage('viaje',this)">Mi viaje</button>
+  <button onclick="showPage('pasaporte',this)">Pasaporte digital</button>
+  <button onclick="showPage('conecta',this)">Conecta</button>
+  <button onclick="showPage('experiencias',this)">Experiencias</button>
+  <button onclick="showPage('perfil',this)">Mi perfil</button>
+ </nav>
+</header>
+
+<!-- INICIO -->
+<section id="inicio" class="page active">
+ <div class="hero">
+  <div class="hero-content">
+   <span class="tag">YOUR JOURNEY. YOUR PEOPLE.</span>
+   <h1>Tu viaje comienza aquí.</h1>
+   <p>Descubre nuevos destinos, conecta con personas y crea experiencias inolvidables en el mar.</p>
+   <button class="btn" onclick="showPage('viaje')">Explorar cruceros</button>
+  </div>
+ </div>
+
+ <h2>Descubre tu próximo crucero</h2>
+ <div class="grid" id="cruiseCards"></div>
+
+ <div class="panel">
+  <h2>Mucho más que un crucero</h2>
+  <p>Con CruiseConnect puedes descubrir experiencias, conocer personas con intereses similares y coleccionar recuerdos de tu viaje.</p>
+  <button class="btn blue" onclick="showPage('conecta')">Conoce Cruise Match</button>
+ </div>
+</section>
+
+<!-- MI VIAJE -->
+<section id="viaje" class="page">
+ <h2>Mi viaje</h2>
+ <p>Escoge tu crucero y descubre sus detalles.</p>
+
+ <div class="panel">
+  <label for="shipSelect"><b>Selecciona tu crucero:</b></label><br><br>
+  <select id="shipSelect" onchange="showShip()">
+   <option value="encore">Norwegian Encore</option>
+   <option value="icon">Icon of the Seas</option>
+   <option value="msc">MSC World America</option>
+  </select>
+ </div>
+
+ <div class="panel ship-detail" id="shipDetail"></div>
+</section>
+
+<!-- PASAPORTE -->
+<section id="pasaporte" class="page">
+ <h2>Pasaporte digital</h2>
+ <div class="panel">
+  <p>Tus puntos acumulados</p>
+  <div class="points"><span id="points">0</span> pts</div>
+  <div class="progress"><div id="progressBar"></div></div>
+  <p id="progressText">Necesitas 100 puntos para desbloquear tu pasaporte.</p>
+ </div>
+
+ <div class="panel">
+  <h2>Tu pasaporte</h2>
+  <div id="passportLocked">
+   <p>🔒 Tu pasaporte digital está bloqueado.</p>
+   <p>Acumula 100 puntos para desbloquearlo.</p>
+  </div>
+  <div id="passportUnlocked" class="hidden">
+   <h2>🌎 ¡Pasaporte desbloqueado!</h2>
+   <p>¡Ya puedes comenzar a coleccionar tus recuerdos de viaje!</p>
+   <div class="stamps" id="passportStamps"></div>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h2>Colecciona destinos</h2>
+  <p>Completa tus recuerdos y gana 30 puntos por cada sello.</p>
+  <div class="stamps" id="destinationStamps"></div>
+ </div>
+</section>
+
+<!-- CONECTA -->
+<section id="conecta" class="page">
+ <h2>Cruise Match</h2>
+ <p>Descubre personas con intereses similares y envíales una solicitud de conexión.</p>
+
+ <div class="panel">
+  <h2>Encuentra tu grupo</h2>
+  <p>Conecta, comparte intereses y disfruta nuevas experiencias durante el viaje.</p>
+ </div>
+
+ <div class="people" id="peopleList"></div>
+</section>
+
+<!-- EXPERIENCIAS -->
+<section id="experiencias" class="page">
+ <h2>Experiencias</h2>
+ <p>Guarda tus recuerdos y participa en actividades para ganar puntos.</p>
+
+ <div class="panel">
+  <h2>📸 Tu momento especial</h2>
+  <p>Selecciona una fotografía o utiliza la cámara de tu dispositivo.</p>
+  <input type="file" id="photoInput" accept="image/*" capture="environment">
+  <img id="photoPreview" class="photo-preview hidden" alt="Vista previa de tu fotografía">
+  <p id="photoMessage"></p>
+ </div>
+
+ <div class="panel">
+  <h2>⭐ Reto CruiseConnect</h2>
+  <p>Participa en el reto y gana puntos para tu pasaporte digital.</p>
+  <button class="btn blue" id="challengeBtn" onclick="completeChallenge()">Completar reto (+25 puntos)</button>
+  <p id="challengeMessage"></p>
+ </div>
+
+ <div class="panel">
+  <h2>Mis recompensas</h2>
+  <p>Acumula puntos participando en las experiencias de CruiseConnect.</p>
+  <h2 id="rewardPoints">0 puntos</h2>
+ </div>
+</section>
+
+<!-- PERFIL -->
+<section id="perfil" class="page">
+ <h2>Mi perfil</h2>
+ <div class="panel">
+  <div style="text-align:center">
+   <img src="https://i.pravatar.cc/150?img=47" alt="Foto de perfil" style="width:110px;height:110px;border-radius:50%">
+   <h2 id="profileName">Mi perfil</h2>
+   <p>Mi experiencia CruiseConnect</p>
+  </div>
+  <label for="nameInput">Nombre:</label><br><br>
+  <input id="nameInput" placeholder="Escribe tu nombre">
+  <button class="btn blue" onclick="saveName()">Guardar perfil</button>
+  <hr style="border:0;border-top:1px solid #eee;margin:22px 0">
+  <p><b>Mis puntos:</b> <span id="profilePoints">0</span></p>
+  <p><b>Personas conectadas:</b> <span id="connectionCount">0</span></p>
+  <p><b>Mi pasaporte:</b> <span id="profilePassport">Bloqueado</span></p>
+ </div>
+</section>
+
+<footer>
+ <div class="logo">Cruise<span>Connect</span></div>
+ <p>Your journey. Your people.</p>
+ <small>Prototipo demostrativo de CruiseConnect.</small>
+</footer>
+
+<script>
+const ships = {
+ encore:{
+  name:"Norwegian Encore",
+  line:"Norwegian Cruise Line",
+  duration:"7 días",
+  image:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1000",
+  description:"Explora el Caribe a bordo de Norwegian Encore. Disfruta entretenimiento, gastronomía y espacios para compartir.",
+  itinerary:"Itinerario de ejemplo: Miami, Puerto Plata, St. Thomas, Tortola y Great Stirrup Cay."
+ },
+ icon:{
+  name:"Icon of the Seas",
+  line:"Royal Caribbean",
+  duration:"7 días",
+  image:"https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=1000",
+  description:"Una experiencia llena de entretenimiento, actividades, gastronomía y aventuras en el mar.",
+  itinerary:"Itinerario de ejemplo: Miami, Roatán, Costa Maya y CocoCay."
+ },
+ msc:{
+  name:"MSC World America",
+  line:"MSC Cruises",
+  duration:"7 días",
+  image:"https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=1000",
+  description:"Descubre una experiencia moderna que combina destinos, entretenimiento y diferentes opciones gastronómicas.",
+  itinerary:"Itinerario de ejemplo: Miami, Puerto Plata, San Juan y Ocean Cay."
+ }
+};
+
+const people = [
+ {id:"p1",name:"Sofia",interest:"Aventura y playa",img:"https://i.pravatar.cc/150?img=47"},
+ {id:"p2",name:"Daniel",interest:"Música y viajes",img:"https://i.pravatar.cc/150?img=12"},
+ {id:"p3",name:"Valeria",interest:"Fotografía y cultura",img:"https://i.pravatar.cc/150?img=44"},
+ {id:"p4",name:"Mateo",interest:"Deportes y diversión",img:"https://i.pravatar.cc/150?img=13"},
+ {id:"p5",name:"Camila",interest:"Gastronomía y playa",img:"https://i.pravatar.cc/150?img=45"},
+ {id:"p6",name:"Gabriel",interest:"Explorar destinos",img:"https://i.pravatar.cc/150?img=14"}
+];
+
+const destinations = [
+ {id:"d1",name:"Puerto Rico",emoji:"🇵🇷"},
+ {id:"d2",name:"Bahamas",emoji:"🇧🇸"},
+ {id:"d3",name:"St. Thomas",emoji:"🌴"}
+];
+
+function readData(key,fallback){
+ try{
+  const value=localStorage.getItem(key);
+  return value===null?fallback:JSON.parse(value);
+ }catch(e){return fallback}
+}
+let points=readData("cc_points",0);
+let connections=readData("cc_connections",[]);
+let rewards=readData("cc_rewards",{});
+let stamps=readData("cc_stamps",[]);
+let photoDone=readData("cc_photoDone",false);
+let challengeDone=readData("cc_challengeDone",false);
+let profileName=readData("cc_name","Mi perfil");
+
+function saveData(){
+ localStorage.setItem("cc_points",JSON.stringify(points));
+ localStorage.setItem("cc_connections",JSON.stringify(connections));
+ localStorage.setItem("cc_rewards",JSON.stringify(rewards));
+ localStorage.setItem("cc_stamps",JSON.stringify(stamps));
+ localStorage.setItem("cc_photoDone",JSON.stringify(photoDone));
+ localStorage.setItem("cc_challengeDone",JSON.stringify(challengeDone));
+ localStorage.setItem("cc_name",JSON.stringify(profileName));
+}
+
+function addPoints(amount){
+ points+=amount;
+ saveData();
+ updateAll();
+}
+
+function showPage(id,button){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ const page=document.getElementById(id);
+ if(page)page.classList.add("active");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ if(button)button.classList.add("active");
+}
+
+function renderCruises(){
+ const box=document.getElementById("cruiseCards");
+ box.innerHTML="";
+ Object.keys(ships).forEach(id=>{
+  const s=ships[id];
+  box.innerHTML+=`
+   <article class="card">
+    <img src="${s.image}" alt="${s.name}">
+    <div class="card-content">
+     <span class="tag">${s.line}</span>
+     <h3>${s.name}</h3>
+     <p>${s.duration} · Crucero por el Caribe</p>
+     <button class="btn blue" onclick="selectShip('${id}')">Ver crucero</button>
+    </div>
+   </article>`;
+ });
+}
+
+function selectShip(id){
+ document.getElementById("shipSelect").value=id;
+ showShip();
+ showPage("viaje");
+}
+
+function showShip(){
+ const id=document.getElementById("shipSelect").value;
+ const s=ships[id];
+ document.getElementById("shipDetail").innerHTML=`
+  <div><img src="${s.image}" alt="${s.name}"></div>
+  <div>
+   <span class="tag">${s.line}</span>
+   <h2>${s.name}</h2>
+   <p><b>Duración:</b> ${s.duration}</p>
+   <p>${s.description}</p>
+   <h3>Ruta de ejemplo</h3>
+   <p>${s.itinerary}</p>
+   <small>Los itinerarios son ilustrativos y pueden variar.</small>
+  </div>`;
+}
+
+function renderPeople(){
+ const box=document.getElementById("peopleList");
+ box.innerHTML="";
+ people.forEach(p=>{
+  const connected=connections.includes(p.id);
+  box.innerHTML+=`
+   <div class="person">
+    <img src="${p.img}" alt="Perfil de ${p.name}">
+    <h3>${p.name}</h3>
+    <p>${p.interest}</p>
+    <button class="btn ${connected?"light":"blue"}"
+     ${connected?"disabled":""}
+     onclick="connectPerson('${p.id}')">
+     ${connected?"Conectado ✓":"＋ Agregar"}
+    </button>
+   </div>`;
+ });
+}
+
+function connectPerson(id){
+ if(connections.includes(id))return;
+ connections.push(id);
+ addPoints(15);
+ renderPeople();
+}
+
+function renderDestinations(){
+ const box=document.getElementById("destinationStamps");
+ const passport=document.getElementById("passportStamps");
+ box.innerHTML="";
+ passport.innerHTML="";
+ destinations.forEach(d=>{
+  const done=stamps.includes(d.id);
+  const html=`
+   <div class="stamp ${done?"done":""}">
+    <div style="font-size:30px">${d.emoji}</div>
+    <b>${d.name}</b>
+    <p>${done?"Sello conseguido ✓":"Sello pendiente"}</p>
+    <button class="btn light" ${done?"disabled":""}
+     onclick="collectStamp('${d.id}')">
+     ${done?"Conseguido":"Coleccionar"}
+    </button>
+   </div>`;
+  box.innerHTML+=html;
+  if(done)passport.innerHTML+=`
+   <div class="stamp done">
+    <div style="font-size:30px">${d.emoji}</div>
+    <b>${d.name}</b>
+    <p>Sello conseguido ✓</p>
+   </div>`;
+ });
+}
+
+function collectStamp(id){
+ if(stamps.includes(id))return;
+ stamps.push(id);
+ addPoints(30);
+ renderDestinations();
+}
+
+function completeChallenge(){
+ if(challengeDone)return;
+ challengeDone=true;
+ addPoints(25);
+ document.getElementById("challengeMessage").textContent="¡Reto completado! Ganaste 25 puntos.";
+ document.getElementById("challengeBtn").disabled=true;
+ document.getElementById("challengeBtn").textContent="Reto completado ✓";
+ saveData();
+}
+
+document.getElementById("photoInput").addEventListener("change",function(event){
+ const file=event.target.files[0];
+ if(!file)return;
+ if(!file.type.startsWith("image/"))return;
+ const reader=new FileReader();
+ reader.onload=function(e){
+  const preview=document.getElementById("photoPreview");
+  preview.src=e.target.result;
+  preview.classList.remove("hidden");
+  if(!photoDone){
+   photoDone=true;
+   addPoints(20);
+   document.getElementById("photoMessage").textContent="¡Fotografía guardada en esta sesión! Ganaste 20 puntos.";
+   saveData();
+  }else{
+   document.getElementById("photoMessage").textContent="¡Tu fotografía está lista!";
+  }
+ };
+ reader.readAsDataURL(file);
+});
+
+function saveName(){
+ const value=document.getElementById("nameInput").value.trim();
+ if(!value)return;
+ profileName=value;
+ saveData();
+ updateAll();
+}
+
+function updateAll(){
+ document.getElementById("points").textContent=points;
+ document.getElementById("rewardPoints").textContent=points+" puntos";
+ document.getElementById("profilePoints").textContent=points;
+ document.getElementById("connectionCount").textContent=connections.length;
+ document.getElementById("profileName").textContent=profileName;
+ document.getElementById("nameInput").value=profileName==="Mi perfil"?"":profileName;
+ const unlocked=points>=100;
+ document.getElementById("progressBar").style.width=Math.min(points,100)+"%";
+ document.getElementById("progressText").textContent=unlocked?
+  "¡Llegaste a 100 puntos! Tu pasaporte está desbloqueado.":
+  "Te faltan "+(100-points)+" puntos para desbloquear tu pasaporte.";
+ document.getElementById("passportLocked").classList.toggle("hidden",unlocked);
+ document.getElementById("passportUnlocked").classList.toggle("hidden",!unlocked);
+ document.getElementById("profilePassport").textContent=unlocked?"Desbloqueado ✓":"Bloqueado";
+ document.getElementById("challengeBtn").disabled=challengeDone;
+ document.getElementById("challengeBtn").textContent=challengeDone?"Reto completado ✓":"Completar reto (+25 puntos)";
+}
+
+renderCruises();
+renderPeople();
+renderDestinations();
+showShip();
+updateAll();
+</script>
+
+</body>
+</html>
